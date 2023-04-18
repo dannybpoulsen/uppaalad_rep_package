@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.6//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_6.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+const int NB_PROPS = #NB#;
+
+broadcast chan actions[NB_PROPS];
+bool props[NB_PROPS];
+
+typedef int[0,NB_PROPS-1] id_t;</declaration>
+	<template>
+		<name x="5" y="5">Atom</name>
+		<parameter>bool&amp; atom, broadcast chan&amp; action, broadcast chan&amp; tt, const bool blocked </parameter>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id0" x="-204" y="0">
+		</location>
+		<location id="id1" x="0" y="0">
+			<committed/>
+		</location>
+		<init ref="id0"/>
+		<transition id="id2">
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<label kind="synchronisation" x="-186" y="-17">action?</label>
+		</transition>
+		<transition id="id3">
+			<source ref="id1"/>
+			<target ref="id0"/>
+			<label kind="guard" x="-187" y="-76">!blocked</label>
+			<label kind="synchronisation" x="-187" y="-102">tt!</label>
+			<label kind="assignment" x="-187" y="-59">atom = true</label>
+			<nail x="0" y="-34"/>
+			<nail x="-204" y="-34"/>
+		</transition>
+		<transition id="id4">
+			<source ref="id1"/>
+			<target ref="id0"/>
+			<label kind="guard" x="-186" y="0">blocked</label>
+			<nail x="0" y="34"/>
+			<nail x="-204" y="34"/>
+		</transition>
+	</template>
+	<template>
+		<name>Attacker</name>
+		<location id="id5" x="0" y="0">
+			<label kind="exponentialrate" x="-10" y="34">1</label>
+		</location>
+		<init ref="id5"/>
+		<transition id="id6">
+			<source ref="id5"/>
+			<target ref="id5"/>
+			<label kind="select" x="-16" y="-106">i : id_t</label>
+			<label kind="synchronisation" x="-34" y="-85">actions[i]!</label>
+			<nail x="-34" y="-59"/>
+			<nail x="51" y="-59"/>
+		</transition>
+	</template>
+	<template>
+		<name>Or</name>
+		<parameter>broadcast chan&amp; l, broadcast chan&amp; r, broadcast chan&amp; tt</parameter>
+		<location id="id7" x="68" y="0">
+			<name x="58" y="-34">TT</name>
+		</location>
+		<location id="id8" x="-314" y="0">
+		</location>
+		<location id="id9" x="-102" y="0">
+			<committed/>
+		</location>
+		<init ref="id8"/>
+		<transition id="id10">
+			<source ref="id8"/>
+			<target ref="id9"/>
+			<label kind="synchronisation" x="-296" y="17">r?</label>
+			<nail x="-314" y="34"/>
+			<nail x="-102" y="34"/>
+		</transition>
+		<transition id="id11">
+			<source ref="id8"/>
+			<target ref="id9"/>
+			<label kind="synchronisation" x="-296" y="-51">l?</label>
+			<nail x="-314" y="-34"/>
+			<nail x="-102" y="-34"/>
+		</transition>
+		<transition id="id12">
+			<source ref="id9"/>
+			<target ref="id7"/>
+			<label kind="synchronisation" x="-84" y="-17">tt!</label>
+		</transition>
+	</template>
+	<template>
+		<name>And</name>
+		<parameter>broadcast chan&amp; l, broadcast chan&amp; r, broadcast chan&amp; tt</parameter>
+		<location id="id13" x="-34" y="0">
+			<name x="-44" y="-34">TT</name>
+		</location>
+		<location id="id14" x="-144" y="0">
+			<committed/>
+		</location>
+		<location id="id15" x="-272" y="-68">
+		</location>
+		<location id="id16" x="-272" y="0">
+		</location>
+		<location id="id17" x="-272" y="68">
+		</location>
+		<init ref="id16"/>
+		<transition id="id18">
+			<source ref="id17"/>
+			<target ref="id14"/>
+			<label kind="synchronisation" x="-204" y="34">l?</label>
+		</transition>
+		<transition id="id19">
+			<source ref="id14"/>
+			<target ref="id13"/>
+			<label kind="synchronisation" x="-102" y="-17">tt!</label>
+		</transition>
+		<transition id="id20">
+			<source ref="id16"/>
+			<target ref="id17"/>
+			<label kind="synchronisation" x="-272" y="17">r?</label>
+		</transition>
+		<transition id="id21">
+			<source ref="id15"/>
+			<target ref="id14"/>
+			<label kind="synchronisation" x="-212" y="-76">r?</label>
+		</transition>
+		<transition id="id22">
+			<source ref="id16"/>
+			<target ref="id15"/>
+			<label kind="synchronisation" x="-272" y="-51">l?</label>
+		</transition>
+	</template>
+	<template>
+		<name>SAnd</name>
+		<parameter>broadcast chan&amp; l, broadcast chan&amp; r, broadcast chan&amp; tt</parameter>
+		<location id="id23" x="178" y="0">
+			<name x="168" y="-34">TT</name>
+		</location>
+		<location id="id24" x="42" y="0">
+			<committed/>
+		</location>
+		<location id="id25" x="-102" y="0">
+		</location>
+		<location id="id26" x="-238" y="0">
+		</location>
+		<init ref="id26"/>
+		<transition id="id27">
+			<source ref="id24"/>
+			<target ref="id23"/>
+			<label kind="synchronisation" x="85" y="-25">tt!</label>
+		</transition>
+		<transition id="id28">
+			<source ref="id25"/>
+			<target ref="id24"/>
+			<label kind="synchronisation" x="-84" y="-17">r?</label>
+		</transition>
+		<transition id="id29">
+			<source ref="id26"/>
+			<target ref="id25"/>
+			<label kind="synchronisation" x="-220" y="-17">l?</label>
+		</transition>
+	</template>
+	<system>
+#DECL#</system>
+	<queries>
+		<query>
+			<formula/>
+			<comment/>
+		</query>
+	</queries>
+</nta>
