@@ -8,17 +8,19 @@ class Experiment:
         self._location = location.subLocation ("duqu")
         with tempfile.TemporaryDirectory () as tdir:
             outpath = os.path.join (tdir,"out.xml")
-    
+            model = models.duqu.Model()
+            
+            
             ad = tools.UppaalAD ()
             
+            
             attacker_actions = []
-            for a in attacker_actions:
+            for a in model.attacker_actions():
                 ad.addAttackerSymbol (a)
-                ad.addAttackerTemplate ("Attacker")
+            ad.addAttackerTemplate ("Attacker")
                 
-            model = models.duqu.Model()
             ad.run (model.modelpath(),outpath)
-    
+            
     
             with open (outpath,'r') as ff:
                 modeltext = ff.read ()
@@ -32,5 +34,6 @@ class Experiment:
         with self._location.makeFile (f"duqu.xml") as ff:
             ff.write (self._model)
         
+    
             
         

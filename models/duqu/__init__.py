@@ -15,3 +15,5 @@ class Model:
     def modelpath (self):
         return self._fpath
 
+    def attacker_actions (self):
+        return ["actions"]

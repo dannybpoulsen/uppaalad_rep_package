@@ -18,7 +18,7 @@ def compile (path):
         
         os.makedirs (builddir,exist_ok = True)
         logging.warning (f"Compiling {path} in {builddir}") 
-        subprocess.run (["cmake",".."],cwd = builddir)
+        subprocess.run (["cmake","../UppaalAD-master"],cwd = builddir)
         subprocess.run (["make"],cwd = builddir)
     return binpath 
 
