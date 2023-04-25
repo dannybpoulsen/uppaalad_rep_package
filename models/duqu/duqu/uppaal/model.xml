@@ -7,7 +7,9 @@ const int NB_PROPS = #NB#;
 broadcast chan actions[NB_PROPS];
 bool props[NB_PROPS];
 
-typedef int[0,NB_PROPS-1] id_t;</declaration>
+typedef int[0,NB_PROPS-1] id_t;
+
+broadcast chan tok;</declaration>
 	<template>
 		<name x="5" y="5">Atom</name>
 		<parameter>bool&amp; atom, broadcast chan&amp; action, broadcast chan&amp; tt, const bool blocked </parameter>
@@ -43,120 +45,133 @@ typedef int[0,NB_PROPS-1] id_t;</declaration>
 	</template>
 	<template>
 		<name>Attacker</name>
+		<declaration>int k;</declaration>
 		<location id="id5" x="0" y="0">
 			<label kind="exponentialrate" x="-10" y="34">1</label>
 		</location>
+		<location id="id6" x="144" y="-8">
+		</location>
 		<init ref="id5"/>
-		<transition id="id6">
-			<source ref="id5"/>
+		<transition id="id7">
+			<source ref="id6"/>
 			<target ref="id5"/>
+			<label kind="guard" x="18" y="-17">props[k]</label>
+			<label kind="synchronisation" x="18" y="0">tok!</label>
+			<nail x="136" y="68"/>
+			<nail x="0" y="68"/>
+		</transition>
+		<transition id="id8">
+			<source ref="id5"/>
+			<target ref="id6"/>
 			<label kind="select" x="-16" y="-106">i : id_t</label>
 			<label kind="synchronisation" x="-34" y="-85">actions[i]!</label>
-			<nail x="-34" y="-59"/>
+			<label kind="assignment" x="-16" y="-59">k = i</label>
+			<nail x="0" y="-59"/>
 			<nail x="51" y="-59"/>
+			<nail x="136" y="-59"/>
 		</transition>
 	</template>
 	<template>
 		<name>Or</name>
 		<parameter>broadcast chan&amp; l, broadcast chan&amp; r, broadcast chan&amp; tt</parameter>
-		<location id="id7" x="68" y="0">
+		<location id="id9" x="68" y="0">
 			<name x="58" y="-34">TT</name>
 		</location>
-		<location id="id8" x="-314" y="0">
+		<location id="id10" x="-314" y="0">
 		</location>
-		<location id="id9" x="-102" y="0">
+		<location id="id11" x="-102" y="0">
 			<committed/>
 		</location>
-		<init ref="id8"/>
-		<transition id="id10">
-			<source ref="id8"/>
-			<target ref="id9"/>
+		<init ref="id10"/>
+		<transition id="id12">
+			<source ref="id10"/>
+			<target ref="id11"/>
 			<label kind="synchronisation" x="-296" y="17">r?</label>
 			<nail x="-314" y="34"/>
 			<nail x="-102" y="34"/>
 		</transition>
-		<transition id="id11">
-			<source ref="id8"/>
-			<target ref="id9"/>
+		<transition id="id13">
+			<source ref="id10"/>
+			<target ref="id11"/>
 			<label kind="synchronisation" x="-296" y="-51">l?</label>
 			<nail x="-314" y="-34"/>
 			<nail x="-102" y="-34"/>
 		</transition>
-		<transition id="id12">
-			<source ref="id9"/>
-			<target ref="id7"/>
+		<transition id="id14">
+			<source ref="id11"/>
+			<target ref="id9"/>
 			<label kind="synchronisation" x="-84" y="-17">tt!</label>
 		</transition>
 	</template>
 	<template>
 		<name>And</name>
 		<parameter>broadcast chan&amp; l, broadcast chan&amp; r, broadcast chan&amp; tt</parameter>
-		<location id="id13" x="-34" y="0">
+		<location id="id15" x="-34" y="0">
 			<name x="-44" y="-34">TT</name>
 		</location>
-		<location id="id14" x="-144" y="0">
+		<location id="id16" x="-144" y="0">
 			<committed/>
 		</location>
-		<location id="id15" x="-272" y="-68">
+		<location id="id17" x="-272" y="-68">
 		</location>
-		<location id="id16" x="-272" y="0">
+		<location id="id18" x="-272" y="0">
 		</location>
-		<location id="id17" x="-272" y="68">
+		<location id="id19" x="-272" y="68">
 		</location>
-		<init ref="id16"/>
-		<transition id="id18">
-			<source ref="id17"/>
-			<target ref="id14"/>
+		<init ref="id18"/>
+		<transition id="id20">
+			<source ref="id19"/>
+			<target ref="id16"/>
 			<label kind="synchronisation" x="-204" y="34">l?</label>
 		</transition>
-		<transition id="id19">
-			<source ref="id14"/>
-			<target ref="id13"/>
-			<label kind="synchronisation" x="-102" y="-17">tt!</label>
-		</transition>
-		<transition id="id20">
-			<source ref="id16"/>
-			<target ref="id17"/>
-			<label kind="synchronisation" x="-272" y="17">r?</label>
-		</transition>
 		<transition id="id21">
-			<source ref="id15"/>
-			<target ref="id14"/>
-			<label kind="synchronisation" x="-212" y="-76">r?</label>
-		</transition>
-		<transition id="id22">
 			<source ref="id16"/>
 			<target ref="id15"/>
+			<label kind="synchronisation" x="-102" y="-17">tt!</label>
+		</transition>
+		<transition id="id22">
+			<source ref="id18"/>
+			<target ref="id19"/>
+			<label kind="synchronisation" x="-272" y="17">r?</label>
+		</transition>
+		<transition id="id23">
+			<source ref="id17"/>
+			<target ref="id16"/>
+			<label kind="synchronisation" x="-212" y="-76">r?</label>
+		</transition>
+		<transition id="id24">
+			<source ref="id18"/>
+			<target ref="id17"/>
 			<label kind="synchronisation" x="-272" y="-51">l?</label>
 		</transition>
 	</template>
 	<template>
 		<name>SAnd</name>
 		<parameter>broadcast chan&amp; l, broadcast chan&amp; r, broadcast chan&amp; tt</parameter>
-		<location id="id23" x="178" y="0">
+		<location id="id25" x="178" y="0">
 			<name x="168" y="-34">TT</name>
 		</location>
-		<location id="id24" x="42" y="0">
+		<location id="id26" x="42" y="0">
 			<committed/>
 		</location>
-		<location id="id25" x="-102" y="0">
+		<location id="id27" x="-102" y="0">
 		</location>
-		<location id="id26" x="-238" y="0">
+		<location id="id28" x="-238" y="0">
 		</location>
-		<init ref="id26"/>
-		<transition id="id27">
-			<source ref="id24"/>
-			<target ref="id23"/>
-			<label kind="synchronisation" x="85" y="-25">tt!</label>
-		</transition>
-		<transition id="id28">
-			<source ref="id25"/>
-			<target ref="id24"/>
-			<label kind="synchronisation" x="-84" y="-17">r?</label>
-		</transition>
+		<init ref="id28"/>
 		<transition id="id29">
 			<source ref="id26"/>
 			<target ref="id25"/>
+			<label kind="synchronisation" x="85" y="-25">tt!</label>
+		</transition>
+		<transition id="id30">
+			<source ref="id27"/>
+			<target ref="id26"/>
+			<label kind="synchronisation" x="-84" y="-17">r?</label>
+		</transition>
+		<transition id="id31">
+			<source ref="id28"/>
+			<target ref="id27"/>
 			<label kind="synchronisation" x="-220" y="-17">l?</label>
 		</transition>
 	</template>
